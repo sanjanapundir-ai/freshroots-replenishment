@@ -16,7 +16,7 @@ import engine
 
 ROOT = Path(__file__).parent
 
-REC_COLS = ["sku", "name", "segment", "perishable", "vendor", "route", "action", "suggested_qty",
+REC_COLS = ["sku", "name", "segment", "perishable", "vendor", "region", "route", "action", "suggested_qty",
             "alt_qty", "on_hand", "avg_12w", "avg_4w", "trend_pct", "fcst_next_week", "fcst_6w",
             "cover_weeks", "cover_no_uplift", "cover_after_order", "min_weeks", "max_weeks",
             "lead_time_weeks", "lead_time_assumed", "lead_time_demand", "safety_stock", "flags", "reasons"]

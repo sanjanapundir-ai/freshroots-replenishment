@@ -3,7 +3,7 @@
   <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
     <path d="M0 0 L10 5 L0 10 z" fill="#14233c"/></marker>
   <style>
-    text { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; fill: #14233c; }
+    text { font-family: -apple-system, "Segoe UI", "Kohinoor Devanagari", "Noto Sans Devanagari", "Nirmala UI", Roboto, Helvetica, Arial, sans-serif; fill: #14233c; }
     .tt { font-size: 34px; font-weight: 700; }
     .hd { font-size: 21px; font-weight: 600; fill: #ffffff; }
     .an { font-size: 21px; font-weight: 700; fill: #ffffff; }

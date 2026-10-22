@@ -31,14 +31,18 @@
     "DIST001": null,
     "DIST002": null,
     "DIST003": null,
-    "DIST004": null
+    "DIST004": null,
+    "DIST005": null,
+    "DIST006": null
   },
 
   "shelf_life_weeks": {
     "_status": "ASSUMED - fill in from QA for perishables; caps order-up-to so stock never outlives shelf life",
     "SKU004": null,
     "SKU007": null,
-    "SKU011": null
+    "SKU011": null,
+    "SKU025": null,
+    "SKU028": null
   },
 
   "segmentation": {

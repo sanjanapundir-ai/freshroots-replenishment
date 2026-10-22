@@ -1,0 +1,30 @@
+SKU_ID,SKU_Name,Category,Perishability,Standard_Reorder_Qty,Unit_of_Measure,Distributor_ID,Region
+SKU001,Freshroots Mango Drink 200ml,Beverage,Low,500,Units,DIST001,Maharashtra & Goa
+SKU002,Freshroots Oats Cookies 150g,Snack,Low,200,Units,DIST001,Maharashtra & Goa
+SKU003,Freshroots Brown Rice 1kg,Staple,Low,300,Units,DIST002,Maharashtra & Goa
+SKU004,Freshroots Almond Milk 500ml,Dairy Alt,High,150,Units,DIST002,Maharashtra & Goa
+SKU005,Freshroots Mixed Nuts 100g,Snack,Low,150,Units,DIST003,Maharashtra & Goa
+SKU006,Freshroots Quinoa 500g,Staple,Low,100,Units,DIST003,Maharashtra & Goa
+SKU007,Freshroots Coconut Water 330ml,Beverage,High,400,Units,DIST001,Maharashtra & Goa
+SKU008,Freshroots Granola Bar 40g,Snack,Low,300,Units,DIST002,Maharashtra & Goa
+SKU009,Freshroots Chia Seeds 200g,Staple,Low,80,Units,DIST003,Maharashtra & Goa
+SKU010,Freshroots Apple Cider Vinegar 500ml,Condiment,Low,60,Units,DIST004,Maharashtra & Goa
+SKU011,Freshroots Multigrain Bread 400g,Staple,High,500,Units,DIST004,Maharashtra & Goa
+SKU012,Freshroots Herbal Tea 25 bags,Beverage,Low,150,Units,DIST004,Maharashtra & Goa
+SKU013,Freshroots Peanut Butter 300g,Condiment,Low,120,Units,DIST001,Maharashtra & Goa
+SKU014,Freshroots Dark Chocolate 80g,Snack,Low,200,Units,DIST002,Maharashtra & Goa
+SKU015,Freshroots Honey 500g,Condiment,Low,80,Units,DIST003,Maharashtra & Goa
+SKU016,Freshroots Kanda Poha 500g,Staple,Low,400,Units,DIST005,Maharashtra
+SKU017,Freshroots Bhajani Chakli 200g,Snack,Low,300,Units,DIST005,Maharashtra
+SKU018,Freshroots Pune Bhakarwadi 250g,Snack,Low,250,Units,DIST005,Maharashtra
+SKU019,Freshroots Kokum Sharbat 750ml,Beverage,Low,200,Units,DIST005,Maharashtra
+SKU020,Freshroots Kolhapuri Gul (Jaggery) 1kg,Staple,Low,300,Units,DIST005,Maharashtra
+SKU021,Freshroots Thalipeeth Bhajani 500g,Staple,Low,150,Units,DIST005,Maharashtra
+SKU022,Freshroots Ukadiche Modak Rice Flour 500g,Staple,Low,200,Units,DIST005,Maharashtra
+SKU023,Freshroots Shrewsbury Butter Biscuits 200g,Snack,Low,250,Units,DIST005,Maharashtra
+SKU024,Freshroots Goan Cashews W320 250g,Snack,Low,200,Units,DIST006,Goa
+SKU025,Freshroots Goan Bebinca 400g,Snack,High,120,Units,DIST006,Goa
+SKU026,Freshroots Goan Ukda Red Rice 5kg,Staple,Low,100,Units,DIST006,Goa
+SKU027,Freshroots Recheado Masala 100g,Condiment,Low,150,Units,DIST006,Goa
+SKU028,Freshroots Sol Kadhi 500ml,Beverage,High,200,Units,DIST006,Goa
+SKU029,Freshroots Puran Poli Ready Mix 400g,Staple,Low,150,Units,DIST005,Maharashtra

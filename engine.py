@@ -288,7 +288,7 @@ def evaluate(sku_row, clean, sku_issues, seg, cfg):
 
     rec = {
         "sku": sku, "name": sku_row["SKU_Name"], "category": sku_row.get("Category", ""),
-        "perishable": perishable, "vendor": sku_row["Distributor_ID"],
+        "perishable": perishable, "vendor": sku_row["Distributor_ID"], "region": sku_row.get("Region", ""),
         "segment": abc + xyz, "cv": round(cv, 3) if cv != float("inf") else None,
         "lead_time_weeks": lt, "lead_time_assumed": lt_assumed,
         "min_weeks": pol["min_weeks"], "max_weeks": pol["max_weeks"],
