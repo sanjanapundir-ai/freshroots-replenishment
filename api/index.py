@@ -138,7 +138,10 @@ class handler(BaseHTTPRequestHandler):
 
     def route(self, method):
         url = urlparse(self.path)
-        path = url.path.rstrip("/")
+        query = parse_qs(url.query)
+        # On Vercel the rewrite hands the original path over as ?route=; locally it is the path itself.
+        path = ("/api/" + query["route"][0]) if "route" in query else url.path
+        path = path.rstrip("/")
         body = {}
         if method == "POST":
             length = int(self.headers.get("Content-Length") or 0)
@@ -150,7 +153,7 @@ class handler(BaseHTTPRequestHandler):
                 if method == "GET" and path == "/api/runs":
                     return self.send(200, list_runs(cur))
                 if method == "GET" and path == "/api/run":
-                    run_id, data = load_run(cur, parse_qs(url.query).get("id", [None])[0])
+                    run_id, data = load_run(cur, query.get("id", [None])[0])
                     return self.send(200, {**data, "decisions": latest_decisions(cur, run_id),
                                            "reason_codes": CFG["reason_codes"]})
                 if method == "GET" and path == "/api/decisions.csv":

@@ -1,6 +1,6 @@
 {
   "regions": ["sin1"],
-  "rewrites": [{ "source": "/api/(.*)", "destination": "/api/index" }],
+  "rewrites": [{ "source": "/api/(.*)", "destination": "/api/index?route=$1" }],
   "functions": {
     "api/index.py": { "includeFiles": "{engine.py,approve.py,config.json}", "maxDuration": 30 }
   }
