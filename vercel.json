@@ -2,6 +2,6 @@
   "regions": ["sin1"],
   "rewrites": [{ "source": "/api/(.*)", "destination": "/api/index?route=$1" }],
   "functions": {
-    "api/index.py": { "includeFiles": "{engine.py,approve.py,config.json}", "maxDuration": 30 }
+    "api/index.py": { "includeFiles": "{engine.py,approve.py,ops.py,config.json}", "maxDuration": 30 }
   }
 }

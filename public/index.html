@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Freshroots Replenishment</title>
+<title>Freshroots Operations</title>
 <link rel="icon" href="/logo.svg" type="image/svg+xml">
 <style>
   :root {
@@ -71,27 +71,60 @@
   .files { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
   pre.log { white-space: pre-wrap; margin: 0; font-size: 12px; background: var(--white); border: 1px solid var(--orange-line); border-radius: 8px; padding: 10px; }
   [hidden] { display: none !important; }
-  @media (max-width: 760px) { .card { grid-template-columns: 1fr; } .side { border-left: none; border-top: 1px solid var(--orange-line); } }
+  .topline { display: flex; flex-wrap: wrap; gap: 10px 16px; justify-content: space-between; align-items: center; }
+  label.me { color: var(--white); opacity: .95; width: 220px; }
+  label.me input { border-color: rgba(255,255,255,.7); }
+  .tab .count { display: inline-block; min-width: 18px; padding: 0 5px; margin-left: 4px; border-radius: 99px; background: var(--red); color: var(--white); font-size: 11px; text-align: center; }
+  .form { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px 12px; align-items: end;
+          border: 1px solid var(--orange-line); border-radius: 10px; padding: 14px 16px; background: var(--tint); }
+  .form .wide { grid-column: 1 / -1; }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; border: 1px solid var(--orange-line); color: var(--muted); white-space: nowrap; }
+  .pill.OPEN { background: var(--orange); border-color: var(--orange); color: var(--white); }
+  .pill.ESCALATED, .pill.late { background: var(--red); border-color: var(--red); color: var(--white); }
+  .pill.RESPONDED, .pill.ACKNOWLEDGED { background: var(--orange-soft); color: var(--orange-deep); }
+  .pill.RESOLVED, .pill.ontime { color: var(--ok); border-color: currentColor; }
+  .bad { color: var(--red); font-weight: 600; }
+  .bars { display: grid; gap: 6px; }
+  .bar { display: grid; grid-template-columns: 170px 1fr 70px; gap: 10px; align-items: center; font-size: 13px; }
+  .bar .track { height: 12px; background: var(--tint); border: 1px solid var(--orange-soft); border-radius: 6px; overflow: hidden; }
+  .bar .fill { height: 100%; background: var(--orange); }
+  .bar .fill.routine { background: var(--orange-deep); }
+  .bar .n { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+  tr.edit td { background: var(--tint); }
+  .inline { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
+  .inline > * { flex: 1 1 160px; }
+  .inline button { flex: 0 0 auto; }
+  .alert { border: 1px solid var(--orange-line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; }
+  .alert.esc { border-color: var(--red); box-shadow: inset 4px 0 0 var(--red); }
+  .alert.OPEN:not(.esc) { box-shadow: inset 4px 0 0 var(--orange); }
+  .alert pre { margin: 0; white-space: pre-wrap; font: inherit; font-size: 13px; color: var(--muted); }
+  .alert .acts { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin-top: 4px; }
+  .alert .acts input { flex: 1 1 260px; }
+  .check48 { border: 1px dashed var(--orange); border-radius: 8px; padding: 10px 12px; background: var(--white); font-size: 13px; }
+  .err { color: var(--red); font-size: 12px; min-height: 16px; }
+  @media (max-width: 760px) { .card { grid-template-columns: 1fr; } .side { border-left: none; border-top: 1px solid var(--orange-line); } .bar { grid-template-columns: 110px 1fr 56px; } }
 </style>
 </head>
 <body>
 <header class="band">
   <div class="wrap">
-    <h1><img src="/logo.svg" alt="">Freshroots <span class="light">replenishment</span></h1>
+    <div class="topline">
+      <h1><img src="/logo.svg" alt="">Freshroots <span class="light">operations</span></h1>
+      <label class="me">Your name<input id="reviewer" placeholder="Needed to save anything"></label>
+    </div>
     <div class="sub" id="runinfo">Loading…</div>
     <nav class="tabs" role="tablist">
       <button class="tab" role="tab" data-view="review" aria-selected="true">Review queue</button>
       <button class="tab" role="tab" data-view="runs" aria-selected="false">Runs</button>
       <button class="tab" role="tab" data-view="upload" aria-selected="false">New run</button>
+      <button class="tab" role="tab" data-view="queries" aria-selected="false">Distributor queries</button>
+      <button class="tab" role="tab" data-view="alerts" aria-selected="false">Metric alerts <span class="count" id="alertcount" hidden></span></button>
     </nav>
   </div>
 </header>
 
 <main class="wrap" id="view-review">
-  <div class="row">
-    <div class="muted" id="scope">Decisions are saved for everyone using this site.</div>
-    <label style="width:200px">Reviewer<input id="reviewer" placeholder="Your name"></label>
-  </div>
+  <div class="muted" id="scope">Decisions are saved for everyone using this site.</div>
   <div id="banners"></div>
   <div class="stats" id="stats"></div>
   <h2 id="queuehead">Needs a decision</h2>
@@ -127,6 +160,53 @@
   </div>
 </main>
 
+<main class="wrap" id="view-queries" hidden>
+  <p class="muted" style="margin:0">Log every distributor query from the shared WhatsApp inbox. After 6 weeks these numbers decide whether answering routine queries from SAP is worth automating.</p>
+  <div class="stats" id="q-stats"></div>
+  <div class="banner" id="q-gate"></div>
+  <h2>Queries by category, last 6 weeks</h2>
+  <div class="bars" id="q-bars"></div>
+  <h2>Log a query</h2>
+  <div class="form" id="q-form">
+    <label>Distributor<input id="q-dist" placeholder="Name or code, e.g. Nashik – Patil Traders"></label>
+    <label>Region<select id="q-region"><option>Maharashtra</option><option>Goa</option></select></label>
+    <label>Category<select id="q-cat"></select></label>
+    <label>Channel<select id="q-channel"><option>WhatsApp</option><option>Phone</option><option>Email</option><option>Field rep</option></select></label>
+    <label>Assigned to<input id="q-assign" placeholder="CS rep"></label>
+    <label>Received at (blank = now)<input type="datetime-local" id="q-received"></label>
+    <label class="wide">What they asked<input id="q-summary" placeholder="e.g. Where is order 4471? Promised Monday."></label>
+    <div class="wide inline"><button class="primary" id="q-save">Log query</button><span class="err" id="q-err"></span></div>
+  </div>
+  <div class="row">
+    <h2 style="margin:0">Queries</h2>
+    <label style="width:180px">Show<select id="q-filter"><option value="active">Open and replied</option><option value="OPEN">Waiting for first reply</option><option value="RESOLVED">Resolved</option><option value="">All</option></select></label>
+  </div>
+  <div class="tablewrap" id="q-table"></div>
+  <p class="muted" style="margin:0">Full log as CSV for the 6-week review: <a href="/api/queries.csv" style="color:var(--orange-deep)">queries.csv</a>. Replies are due within 2 working hours (Monday to Saturday, 9:00–19:00); queries after hours start the clock at 9:00 next working day.</p>
+</main>
+
+<main class="wrap" id="view-alerts" hidden>
+  <p class="muted" style="margin:0">Each alert goes to one metric owner. They acknowledge it with the action taken before the deadline, or it escalates to Deepa.</p>
+  <div class="stats" id="a-stats"></div>
+  <div class="row">
+    <h2 style="margin:0">Alerts</h2>
+    <label style="width:200px">Show<select id="a-filter"><option value="active">Open and acknowledged</option><option value="escalated">Escalated to Deepa</option><option value="RESOLVED">Resolved</option><option value="">All</option></select></label>
+  </div>
+  <div id="a-list" style="display:grid;gap:10px"></div>
+  <h2>Raise an alert</h2>
+  <div class="form">
+    <label class="wide">Metric<select id="a-metric"></select></label>
+    <div class="wide muted" id="a-owner"></div>
+    <label class="wide">What moved<input id="a-title" placeholder="e.g. Kolhapur distributor order down 34% vs 4-week average"></label>
+    <label class="wide">Detail (optional)<textarea id="a-detail" rows="2" placeholder="Numbers, links, what you already know"></textarea></label>
+    <div class="wide check48" id="a-check" hidden></div>
+    <div class="wide inline"><button class="primary" id="a-save">Raise alert</button><span class="err" id="a-err"></span></div>
+  </div>
+  <h2>Metric owner register</h2>
+  <p class="muted" style="margin:0">One owner per metric. Alerts route to the role; fill in the current name. Changes apply to new alerts.</p>
+  <div class="tablewrap" id="a-register"></div>
+</main>
+
 <script>
 const FLAG_TEXT = {
   STOCKOUT_RISK: ["Stockout risk", "bad"], OVERSTOCK: ["Overstock", "warn"], HIGH_DEMAND: ["High demand", "warn"],
@@ -150,8 +230,12 @@ async function api(path, body) {
 
 function show(view) {
   document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", String(t.dataset.view === view)));
-  ["review", "runs", "upload"].forEach(v => { $("#view-" + v).hidden = v !== view; });
+  ["review", "runs", "upload", "queries", "alerts"].forEach(v => { $("#view-" + v).hidden = v !== view; });
+  $("#runinfo").hidden = !["review", "runs", "upload"].includes(view);
   if (view === "runs") loadRuns();
+  if (view === "queries") loadQueries();
+  if (view === "alerts") loadAlerts();
+  history.replaceState(null, "", (runId && view === "review" ? "?run=" + encodeURIComponent(runId) : location.pathname) + (view === "review" ? "" : "#" + view));
 }
 document.querySelectorAll(".tab").forEach(t => t.onclick = () => show(t.dataset.view));
 
@@ -296,7 +380,185 @@ $("#runbtn").onclick = async () => {
   $("#runbtn").disabled = false;
 };
 
+// ---------------------------------------------------------------- shared
+const me = () => $("#reviewer").value.trim();
+const when = s => s ? s.slice(0, 16).replace("T", " ") : "–";
+const pct = v => v == null ? "–" : Math.round(v * 100) + "%";
+function needName(errEl) {
+  if (me()) return true;
+  errEl.textContent = "Enter your name at the top first, so the log shows who did it.";
+  $("#reviewer").focus();
+  return false;
+}
+function hoursLeft(due) {
+  const h = (Date.parse(due) - Date.now()) / 36e5;
+  if (h < 0) return `${Math.round(-h)} h overdue`;
+  return h < 48 ? `${Math.max(0, Math.round(h))} h left` : `${Math.round(h / 24)} days left`;
+}
+
+// ---------------------------------------------------------------- distributor queries
+let qData = null, qEditing = null;
+async function loadQueries() {
+  try { qData = await api("/api/queries" + ($("#q-filter").value ? "?status=" + $("#q-filter").value : "")); renderQueries(); }
+  catch (e) { $("#q-table").innerHTML = `<div class="banner bad">${esc(e.message)}</div>`; }
+}
+$("#q-filter").onchange = loadQueries;
+
+function renderQueries() {
+  const { queries, stats: s } = qData;
+  if (!$("#q-cat").options.length) $("#q-cat").innerHTML = s.categories.map(c => `<option>${esc(c)}</option>`).join("");
+  const openNow = Object.values(s.open_by_assignee).reduce((a, b) => a + b, 0);
+  $("#q-stats").innerHTML = [
+    [s.total_6w, "queries logged, last 6 weeks"],
+    [pct(s.routine_share), "routine (order, ETA, scheme, credit note)"],
+    [pct(s.sla_met_share), "first reply within 2 working hours"],
+    [s.median_minutes_to_reply == null ? "–" : s.median_minutes_to_reply + " min", "median time to first reply"],
+    [openNow, "open now"],
+    [`${s.weeks_of_data} / ${s.gate.weeks_needed}`, "weeks of data collected"],
+  ].map(([b, t]) => `<div class="stat"><b>${esc(b)}</b><span>${esc(t)}</span></div>`).join("");
+  $("#q-gate").textContent = !s.total_6w ? "No queries logged yet. Log each WhatsApp query as it comes in; the automate-or-not decision needs 6 weeks of them."
+    : !s.gate.ready ? `Decision gate: ${s.weeks_of_data} of 6 weeks collected. Automate only if routine queries reach ${pct(s.gate.routine_target)}; currently ${pct(s.routine_share)}.`
+    : `Decision gate reached: routine queries are ${pct(s.routine_share)} against a ${pct(s.gate.routine_target)} target, so the answer is "${s.gate.verdict}".`;
+  const max = Math.max(1, ...Object.values(s.by_category));
+  const routine = ["Order status", "Delivery ETA", "Scheme eligibility", "Returns or credit note"];
+  $("#q-bars").innerHTML = s.categories.map(c => `<div class="bar"><span>${esc(c)}</span><div class="track"><div class="fill ${routine.includes(c) ? "routine" : ""}" style="width:${100 * s.by_category[c] / max}%"></div></div><span class="n">${s.by_category[c]}</span></div>`).join("")
+    + `<div class="muted" style="font-size:12px">Darker bars are the routine categories that could be answered from SAP.</div>`;
+  $("#q-table").innerHTML = queries.length ? `<table><tr><th>Received</th><th>Distributor</th><th>Category</th><th>Query</th><th>Assigned</th><th>Status</th><th>First reply</th><th></th></tr>` +
+    queries.map(q => {
+      const reply = q.first_response_at ? `${when(q.first_response_at)} ${q.sla_met ? '<span class="pill ontime">on time</span>' : '<span class="pill late">late</span>'}`
+        : q.sla_met === false ? `<span class="bad">overdue since ${esc(when(q.sla_due_at))}</span>` : `due ${esc(when(q.sla_due_at))}`;
+      const row = `<tr><td>${esc(when(q.received_at))}</td><td>${esc(q.distributor)}<div class="muted">${esc(q.region)} · ${esc(q.channel)}</div></td>
+        <td>${esc(q.category)}</td><td>${esc(q.summary)}${q.resolution ? `<div class="muted">Resolved: ${esc(q.resolution)}</div>` : ""}</td>
+        <td>${esc(q.assigned_to)}</td><td><span class="pill ${q.status}">${q.status.toLowerCase()}</span></td><td>${reply}</td>
+        <td><button class="linkish" data-q="${q.id}">${qEditing === q.id ? "Close" : "Update"}</button></td></tr>`;
+      if (qEditing !== q.id) return row;
+      return row + `<tr class="edit"><td colspan="8"><div class="inline">
+        <label>Note or resolution<input id="qe-note" placeholder="What you told them"></label>
+        <label>Reassign to<input id="qe-to" placeholder="Rep covering"></label>
+        ${q.first_response_at ? "" : `<button data-act="respond">Record first reply</button>`}
+        <button data-act="reassign">Reassign</button>
+        ${q.status === "RESOLVED" ? `<button data-act="reopen">Reopen</button>` : `<button class="primary" data-act="resolve">Resolve</button>`}
+        <span class="err" id="qe-err"></span></div></td></tr>`;
+    }).join("") + "</table>" : `<p class="muted">No queries in this view.</p>`;
+  document.querySelectorAll("[data-q]").forEach(b => b.onclick = () => { qEditing = qEditing === +b.dataset.q ? null : +b.dataset.q; renderQueries(); });
+  document.querySelectorAll("[data-act]").forEach(b => b.onclick = async () => {
+    const err = $("#qe-err");
+    if (!needName(err)) return;
+    try {
+      await api("/api/queries/update", { id: qEditing, action: b.dataset.act, by: me(), note: $("#qe-note").value, assigned_to: $("#qe-to").value });
+      qEditing = null; loadQueries();
+    } catch (e) { err.textContent = e.message; }
+  });
+}
+
+$("#q-save").onclick = async () => {
+  const err = $("#q-err"); err.textContent = "";
+  if (!needName(err)) return;
+  try {
+    await api("/api/queries", { distributor: $("#q-dist").value, region: $("#q-region").value, category: $("#q-cat").value,
+      channel: $("#q-channel").value, assigned_to: $("#q-assign").value, summary: $("#q-summary").value,
+      received_at: $("#q-received").value || null, logged_by: me() });
+    ["#q-dist", "#q-summary", "#q-received"].forEach(s => { $(s).value = ""; });
+    err.textContent = ""; loadQueries();
+  } catch (e) { err.textContent = e.message; }
+};
+
+// ---------------------------------------------------------------- metric alerts
+let aData = null, metrics = [];
+async function loadAlerts() {
+  try {
+    [aData, metrics] = await Promise.all([api("/api/alerts" + ($("#a-filter").value ? "?status=" + $("#a-filter").value : "")), api("/api/metrics")]);
+    renderAlerts();
+  } catch (e) { $("#a-list").innerHTML = `<div class="banner bad">${esc(e.message)}</div>`; }
+}
+$("#a-filter").onchange = loadAlerts;
+
+function renderAlerts() {
+  const s = aData.summary;
+  $("#a-stats").innerHTML = [
+    [s.open, "open, waiting for the owner"],
+    [s.escalated, "escalated to Deepa"],
+    [pct(s.on_time_share), "acknowledged within deadline"],
+    [s.median_hours_to_ack == null ? "–" : s.median_hours_to_ack + " h", "median time to acknowledge"],
+    [s.po_awaiting_signoff, "POs over 5 lakh awaiting sign-off"],
+  ].map(([b, t], i) => `<div class="stat"><b class="${i === 1 && s.escalated ? "bad" : ""}">${esc(b)}</b><span>${esc(t)}</span></div>`).join("");
+  const badge = $("#alertcount"); badge.hidden = !s.escalated; badge.textContent = s.escalated;
+  $("#a-list").innerHTML = aData.alerts.length ? aData.alerts.map(a => {
+    const esc_ = a.status === "OPEN" && a.escalated_at;
+    const state = esc_ ? `<span class="pill ESCALATED">escalated to ${esc(a.escalate_to)}</span>` : `<span class="pill ${a.status}">${a.status.toLowerCase()}</span>`;
+    const owner = a.owner_name ? `${esc(a.owner_name)} (${esc(a.owner_role)})` : esc(a.owner_role);
+    const timing = a.status === "OPEN" ? `<span class="${esc_ ? "bad" : ""}">${hoursLeft(a.due_at)}</span>`
+      : a.acknowledged_at ? `acknowledged ${esc(when(a.acknowledged_at))} by ${esc(a.acknowledged_by)} ${a.late ? '<span class="pill late">late</span>' : '<span class="pill ontime">on time</span>'}` : "";
+    return `<div class="alert ${a.status} ${esc_ ? "esc" : ""}">
+      <div class="title"><b>${esc(a.title)}</b>${state}</div>
+      <div class="muted">${esc(a.metric)} · owner ${owner} · raised ${esc(when(a.raised_at))} by ${esc(a.raised_by)} · due ${esc(when(a.due_at))} · ${timing}</div>
+      ${a.detail ? `<pre>${esc(a.detail)}</pre>` : ""}
+      <div class="muted">Required action: ${esc(a.action_text)}</div>
+      ${a.action_taken ? `<div>Action taken: ${esc(a.action_taken)}</div>` : ""}
+      ${a.resolution ? `<div>Resolved ${esc(when(a.resolved_at))} by ${esc(a.resolved_by)}: ${esc(a.resolution)}</div>` : ""}
+      ${a.status === "RESOLVED" ? "" : `<div class="acts"><input data-note="${a.id}" placeholder="${a.status === "OPEN" ? (a.metric_id === "po_gate" ? "Checked the last 48 h of alerts: release or hold, and why" : "Action taken or committed, with date") : "How it was resolved"}">
+        <button class="primary" data-alert="${a.id}" data-act="${a.status === "OPEN" ? "acknowledge" : "resolve"}">${a.status === "OPEN" ? (a.metric_id === "po_gate" ? "Sign off" : "Acknowledge") : "Resolve"}</button>
+        <span class="err" data-err="${a.id}"></span></div>`}
+    </div>`;
+  }).join("") : `<p class="muted">No alerts in this view.</p>`;
+  document.querySelectorAll("[data-alert]").forEach(b => b.onclick = async () => {
+    const id = b.dataset.alert, err = document.querySelector(`[data-err="${id}"]`);
+    if (!needName(err)) return;
+    try { await api("/api/alerts/update", { id: +id, action: b.dataset.act, by: me(), note: document.querySelector(`[data-note="${id}"]`).value }); loadAlerts(); }
+    catch (e) { err.textContent = e.message; }
+  });
+
+  const sel = $("#a-metric"), keep = sel.value;
+  sel.innerHTML = metrics.map(m => `<option value="${esc(m.metric_id)}">${esc(m.metric)}</option>`).join("");
+  if (keep) sel.value = keep;
+  showOwner();
+  $("#a-register").innerHTML = `<table><tr><th>Metric</th><th>Owner role</th><th>Owner name</th><th>Trigger</th><th>Required action</th><th>Deadline</th><th>Escalates to</th><th></th></tr>` +
+    metrics.map(m => `<tr><td>${esc(m.metric)}</td><td>${esc(m.owner_role)}</td>
+      <td><input data-owner="${esc(m.metric_id)}" value="${esc(m.owner_name)}" placeholder="To confirm"></td>
+      <td>${esc(m.trigger_text)}</td><td>${esc(m.action_text)}</td><td>${m.deadline_hours} h</td>
+      <td><input data-esc="${esc(m.metric_id)}" value="${esc(m.escalate_to)}"></td>
+      <td><button data-savem="${esc(m.metric_id)}">Save</button><div class="err" data-merr="${esc(m.metric_id)}"></div></td></tr>`).join("") + "</table>";
+  document.querySelectorAll("[data-savem]").forEach(b => b.onclick = async () => {
+    const id = b.dataset.savem, err = document.querySelector(`[data-merr="${id}"]`);
+    if (!needName(err)) return;
+    try {
+      await api("/api/metrics/update", { metric_id: id, by: me(), owner_name: document.querySelector(`[data-owner="${id}"]`).value,
+        escalate_to: document.querySelector(`[data-esc="${id}"]`).value });
+      err.textContent = "Saved"; err.style.color = "var(--ok)";
+    } catch (e) { err.textContent = e.message; err.style.color = ""; }
+  });
+}
+
+function showOwner() {
+  const m = metrics.find(x => x.metric_id === $("#a-metric").value);
+  if (!m) return;
+  $("#a-owner").textContent = `Goes to ${m.owner_name ? m.owner_name + " (" + m.owner_role + ")" : m.owner_role}. Trigger: ${m.trigger_text}. They must act within ${m.deadline_hours} hours or it escalates to ${m.escalate_to}.`;
+  const box = $("#a-check");
+  box.hidden = m.metric_id !== "po_gate";
+  if (!box.hidden) {
+    const r = aData.recent_48h;
+    box.innerHTML = `<b>Before releasing the PO, check the last 48 hours:</b> ` + (r.length
+      ? `<ul style="margin:6px 0 0;padding-left:18px">${r.map(a => `<li>${esc(when(a.raised_at))} · ${esc(a.metric)} · ${esc(a.title)} <span class="pill ${a.status}">${a.status.toLowerCase()}</span></li>`).join("")}</ul>`
+      : "no alerts were raised. Note that in the sign-off.");
+  }
+}
+$("#a-metric").onchange = showOwner;
+
+$("#a-save").onclick = async () => {
+  const err = $("#a-err"); err.textContent = "";
+  if (!needName(err)) return;
+  try {
+    await api("/api/alerts", { metric_id: $("#a-metric").value, title: $("#a-title").value, detail: $("#a-detail").value, raised_by: me() });
+    $("#a-title").value = ""; $("#a-detail").value = ""; loadAlerts();
+  } catch (e) { err.textContent = e.message; }
+};
+
+// The escalation badge on the tab stays current wherever you are.
+api("/api/alerts?status=escalated").then(r => { const b = $("#alertcount"); b.hidden = !r.summary.escalated; b.textContent = r.summary.escalated; }).catch(() => {});
+
 load();
+const startView = location.hash.slice(1);
+if (["runs", "upload", "queries", "alerts"].includes(startView)) show(startView);
 </script>
 </body>
 </html>

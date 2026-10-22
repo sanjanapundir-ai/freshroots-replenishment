@@ -26,6 +26,7 @@ from psycopg.rows import dict_row  # noqa: E402
 from psycopg.types.json import Jsonb  # noqa: E402
 
 import engine  # noqa: E402
+import ops  # noqa: E402
 from approve import LOG_COLS, ZOHO_COLS, validate_decision, zoho_lines  # noqa: E402
 
 IST = timezone(timedelta(hours=5, minutes=30))
@@ -87,8 +88,9 @@ def create_run(cur, body):
     counts = {}
     for r in recs:
         counts[r["route"]] = counts.get(r["route"], 0) + 1
+    alert = None if meta["stops"] else ops.engine_alerts(cur, run_id, data["recs"])
     return {"run_id": run_id, "stops": meta["stops"], "sku_issues": meta["sku_issues"],
-            "warnings": meta["warnings"], "counts": counts}
+            "warnings": meta["warnings"], "counts": counts, "alert": alert}
 
 
 def add_decision(cur, body):
@@ -164,6 +166,26 @@ class handler(BaseHTTPRequestHandler):
                     return self.send(200, add_decision(cur, body))
                 if method == "POST" and path == "/api/zoho":
                     return self.send(200, zoho(cur, body))
+                status = query.get("status", [None])[0]
+                if method == "GET" and path == "/api/queries":
+                    return self.send(200, {"queries": ops.list_queries(cur, status), "stats": ops.query_stats(cur)})
+                if method == "GET" and path == "/api/queries.csv":
+                    return self.send(200, ops.queries_csv(cur), "text/csv")
+                if method == "POST" and path == "/api/queries":
+                    return self.send(200, ops.log_query(cur, body))
+                if method == "POST" and path == "/api/queries/update":
+                    return self.send(200, ops.update_query(cur, body))
+                if method == "GET" and path == "/api/metrics":
+                    return self.send(200, ops.list_metrics(cur))
+                if method == "POST" and path == "/api/metrics/update":
+                    return self.send(200, ops.update_metric(cur, body))
+                if method == "GET" and path == "/api/alerts":
+                    return self.send(200, {"alerts": ops.list_alerts(cur, status), "summary": ops.alert_summary(cur),
+                                           "recent_48h": ops.recent_alerts(cur)})
+                if method == "POST" and path == "/api/alerts":
+                    return self.send(200, ops.raise_alert(cur, body))
+                if method == "POST" and path == "/api/alerts/update":
+                    return self.send(200, ops.update_alert(cur, body))
             return self.send(404, {"error": "Not found"})
         except LookupError as e:
             return self.send(404, {"error": str(e)})
