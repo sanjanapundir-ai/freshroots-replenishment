@@ -86,4 +86,4 @@ This reports forecast error (WAPE) and bias for each past run. It also reports F
 
 ![Components map](docs/components_map.png)
 
-Also served at `/components_map.png` on the live site.
+Hindi version: [docs/components_map_hi.png](docs/components_map_hi.png). Both are served on the live site at `/components_map.png` and `/components_map_hi.png`. Regenerate with `python3 tools/make_map.py docs/components_map.svg en` (or `hi`).
