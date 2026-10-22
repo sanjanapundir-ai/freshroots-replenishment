@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Freshroots Replenishment</title>
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
 <style>
   :root {
     --orange: #e8590c; --orange-deep: #b3430a; --orange-soft: #fde3cf; --orange-line: #f3cdb0;
@@ -16,7 +17,9 @@
   .band { background: var(--orange); color: var(--white); }
   .wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
   .band .wrap { padding-block: 20px 0; display: grid; gap: 6px; }
-  h1 { font-size: 22px; margin: 0; font-weight: 600; }
+  h1 { font-size: 22px; margin: 0; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+  h1 img { width: 40px; height: 40px; flex: none; }
+  h1 .light { font-weight: 400; opacity: .9; }
   .band .sub { opacity: .92; font-size: 13px; }
   .tabs { display: flex; gap: 4px; margin-top: 10px; flex-wrap: wrap; }
   .tab { all: unset; cursor: pointer; padding: 8px 14px; border-radius: 8px 8px 0 0; font-weight: 600; font-size: 13px; background: rgba(255,255,255,.16); color: var(--white); }
@@ -74,7 +77,7 @@
 <body>
 <header class="band">
   <div class="wrap">
-    <h1>Freshroots replenishment</h1>
+    <h1><img src="/logo.svg" alt="">Freshroots <span class="light">replenishment</span></h1>
     <div class="sub" id="runinfo">Loading…</div>
     <nav class="tabs" role="tablist">
       <button class="tab" role="tab" data-view="review" aria-selected="true">Review queue</button>
