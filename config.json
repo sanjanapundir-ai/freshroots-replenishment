@@ -1,0 +1,67 @@
+{
+  "_note": "Every value here is a business rule Raghav must sign off. Items marked ASSUMED are placeholders until procurement confirms them.",
+
+  "data_checks": {
+    "max_inventory_age_days": 4,
+    "max_missing_weeks_before_snapshot": 0,
+    "min_history_weeks": 12
+  },
+
+  "forecast": {
+    "baseline_weeks": 12,
+    "trend_weeks": 4,
+    "festival_months": [10, 11, 3],
+    "festival_uplift": 0.25,
+    "_festival_note": "Uplift applies only to forward-looking weeks that fall in a festival month (by ISO-week Thursday). Never to the 4-vs-12 week trend comparison."
+  },
+
+  "policy": {
+    "standard":   {"min_weeks": 6, "max_weeks": 14, "target_weeks": 8},
+    "perishable": {"min_weeks": 3, "max_weeks": 4,  "target_weeks": 3.5},
+    "high_demand_trend": 0.20,
+    "high_demand_multiplier_as_written": 1.5,
+    "threshold_buffer_pct": 0.10,
+    "order_multiple": 10,
+    "safety_stock_z": 1.65
+  },
+
+  "lead_time_weeks": {
+    "_status": "ASSUMED - supplier lead times are not in SAP export; confirm with procurement",
+    "default": 1,
+    "DIST001": null,
+    "DIST002": null,
+    "DIST003": null,
+    "DIST004": null
+  },
+
+  "shelf_life_weeks": {
+    "_status": "ASSUMED - fill in from QA for perishables; caps order-up-to so stock never outlives shelf life",
+    "SKU004": null,
+    "SKU007": null,
+    "SKU011": null
+  },
+
+  "segmentation": {
+    "abc_cutoffs": [0.80, 0.95],
+    "_abc_note": "By 12-week unit volume (no prices in the export). Switch to revenue once SAP adds list price.",
+    "xyz_cv_cutoffs": [0.10, 0.25]
+  },
+
+  "routing": {
+    "auto_approve_segments": [],
+    "_auto_note": "Empty during the parallel run: Raghav approves every order. Once the override log shows he rarely changes routine orders for steady SKUs, add e.g. [\"AX\", \"BX\"]."
+  },
+
+  "reason_codes": [
+    "TREND_REAL",
+    "TREND_TEMPORARY",
+    "COMPETITOR_SCHEME",
+    "DISTRIBUTOR_SIGNAL",
+    "PROMO_PLANNED",
+    "SUPPLIER_CONSTRAINT",
+    "SHELF_LIFE",
+    "NEW_LAUNCH",
+    "DATA_ISSUE",
+    "OTHER"
+  ]
+}

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Replenishment Review</title>
+<style>
+  :root {
+    --bg: #f6f6f3; --panel: #ffffff; --ink: #1d1f1e; --muted: #6a6f6c; --line: #e2e2dc;
+    --accent: #1f6f4a; --accent-ink: #ffffff; --warn: #9a5b00; --warn-bg: #fff4e0;
+    --bad: #a3271f; --bad-bg: #fdeceb; --ok-bg: #e8f3ec; --chip: #efefea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151716; --panel: #1e2120; --ink: #e9ebe9; --muted: #9aa19d; --line: #2f3331;
+      --accent: #4fb985; --accent-ink: #0d1a13; --warn: #f0b860; --warn-bg: #2d2415;
+      --bad: #f08a80; --bad-bg: #321b19; --ok-bg: #18291f; --chip: #2a2e2c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 24px 16px 64px; }
+  header { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; justify-content: space-between; }
+  h1 { font-size: 20px; margin: 0; }
+  .sub { color: var(--muted); font-size: 13px; }
+  .banner { margin: 16px 0 0; padding: 10px 12px; border-radius: 8px; background: var(--warn-bg);
+            color: var(--warn); font-size: 13px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin: 16px 0; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+  .stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .stat span { color: var(--muted); font-size: 12px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; margin: 10px 0;
+          display: grid; grid-template-columns: 1fr 300px; overflow: hidden; }
+  .card.done { border-color: var(--accent); }
+  .main { padding: 14px 16px; min-width: 0; }
+  .side { padding: 14px 16px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px; }
+  .title { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; }
+  .title b { font-size: 15px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0; }
+  .chip { font-size: 11px; padding: 2px 7px; border-radius: 99px; background: var(--chip); color: var(--muted);
+          font-weight: 600; letter-spacing: .02em; }
+  .chip.bad { background: var(--bad-bg); color: var(--bad); }
+  .chip.warn { background: var(--warn-bg); color: var(--warn); }
+  ul.reasons { margin: 6px 0 10px; padding-left: 18px; }
+  ul.reasons li { margin: 2px 0; }
+  .nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 6px 12px;
+          font-variant-numeric: tabular-nums; }
+  .nums div span { display: block; color: var(--muted); font-size: 11px; }
+  .aw { margin-top: 10px; font-size: 12px; color: var(--muted); }
+  label { font-size: 12px; color: var(--muted); display: block; }
+  input, select, textarea { width: 100%; font: inherit; color: var(--ink); background: var(--bg);
+          border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+  textarea { resize: vertical; min-height: 34px; }
+  .qty { display: flex; gap: 6px; align-items: center; }
+  .qty input { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .qty small { color: var(--muted); white-space: nowrap; }
+  .btns { display: flex; gap: 6px; }
+  button { font: inherit; font-weight: 600; border-radius: 6px; padding: 7px 12px; cursor: pointer;
+           border: 1px solid var(--line); background: var(--panel); color: var(--ink); }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  button:disabled { opacity: .5; cursor: default; }
+  .linkish { background: none; border: none; padding: 0; color: var(--accent); font-weight: 600; cursor: pointer; }
+  .status { font-size: 12px; color: var(--accent); min-height: 16px; }
+  .status.err { color: var(--bad); }
+  h2 { font-size: 15px; margin: 28px 0 8px; }
+  table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line);
+          border-radius: 8px; overflow: hidden; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); font-size: 13px; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; }
+  .tablewrap { overflow-x: auto; }
+  .zoho { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  @media (max-width: 760px) {
+    .card { grid-template-columns: 1fr; }
+    .side { border-left: none; border-top: 1px solid var(--line); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Replenishment review</h1>
+      <div class="sub" id="runinfo">Loading…</div>
+    </div>
+    <div style="width:200px"><label for="reviewer">Reviewer</label><input id="reviewer" placeholder="Your name"></div>
+  </header>
+  <div id="banners"></div>
+  <div class="stats" id="stats"></div>
+
+  <h2 id="queuehead">Needs a decision</h2>
+  <div id="queue"></div>
+
+  <h2>Draft purchase orders</h2>
+  <div class="zoho">
+    <button class="primary" id="zohobtn">Create Zoho drafts</button>
+    <span class="sub" id="zohomsg">Includes every approved or overridden quantity above zero. Nothing is sent to Zoho: import the file there as Draft.</span>
+  </div>
+  <div class="tablewrap" id="zohotable" style="margin-top:10px"></div>
+
+  <h2>Passed through untouched</h2>
+  <div class="tablewrap" id="passed"></div>
+</div>
+
+<script>
+const FLAG_TEXT = {
+  STOCKOUT_RISK: ["Stockout risk", "bad"], OVERSTOCK: ["Overstock", "warn"], HIGH_DEMAND: ["High demand", "warn"],
+  BORDERLINE: ["Borderline", "warn"], ASSUMPTION_SENSITIVE: ["Uplift-sensitive", "warn"], CONFLICT: ["Conflict", "bad"],
+  EXPEDITE: ["Expedite", "bad"], VOLATILE: ["Volatile", "warn"], SHELF_LIFE_RISK: ["Shelf life", "bad"],
+  DATA_ISSUE: ["Data issue", "bad"],
+};
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const fmt = v => v === null || v === undefined || v === "" ? "–" : v;
+let state;
+
+try { $("#reviewer").value = localStorage.getItem("reviewer") || ""; } catch (e) {}
+$("#reviewer").addEventListener("change", e => { try { localStorage.setItem("reviewer", e.target.value); } catch (_) {} });
+
+async function load() {
+  state = await (await fetch("/api/run")).json();
+  render();
+}
+
+function render() {
+  const { meta, recs, decisions } = state;
+  $("#runinfo").textContent = `Run ${meta.run_id} · inventory as of ${meta.inventory_as_of} · ${recs.length} SKUs`;
+  $("#banners").innerHTML = meta.warnings.map(w => `<div class="banner">${esc(w)}</div>`).join("");
+  const queue = recs.filter(r => r.route === "REVIEW" || r.route === "BLOCKED");
+  const decided = queue.filter(r => decisions[r.sku]).length;
+  const count = k => recs.filter(r => r.route === k).length;
+  const k = meta.kpi;
+  $("#stats").innerHTML = [
+    [`${decided} / ${queue.length}`, "decided"],
+    [count("PASS"), "passed untouched"],
+    [count("AUTO"), "auto-approved"],
+    [count("BLOCKED"), "blocked by data"],
+    [`${k.wape_pct}%`, "forecast error (WAPE)"],
+    [`${k.bias_pct > 0 ? "+" : ""}${k.bias_pct}%`, "forecast bias"],
+    [k.median_weeks_of_cover, "median weeks of cover"],
+  ].map(([b, s]) => `<div class="stat"><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join("");
+  $("#queuehead").textContent = `Needs a decision (${queue.length})`;
+  $("#queue").innerHTML = queue.map(card).join("") || `<p class="sub">Nothing to review this run.</p>`;
+  queue.forEach(wire);
+
+  const passed = recs.filter(r => r.route === "PASS" || r.route === "AUTO");
+  $("#passed").innerHTML = passed.length ? `<table><tr><th>SKU</th><th>Name</th><th>Seg</th><th>Route</th>
+    <th>On hand</th><th>12-wk avg</th><th>Trend</th><th>Cover (wks)</th><th>Min–max</th></tr>` +
+    passed.map(r => `<tr><td>${r.sku}</td><td>${esc(r.name)}</td><td>${r.segment}</td><td>${r.route}</td>
+      <td>${r.on_hand}</td><td>${r.avg_12w}</td><td>${r.trend_pct > 0 ? "+" : ""}${r.trend_pct}%</td>
+      <td>${r.cover_weeks}</td><td>${r.min_weeks}–${r.max_weeks}</td></tr>`).join("") + "</table>"
+    : `<p class="sub">None.</p>`;
+}
+
+function card(r) {
+  const d = state.decisions[r.sku];
+  const qty = d ? d.final_qty : (r.suggested_qty ?? "");
+  const opts = ['<option value="">Reason (needed if you change it)</option>']
+    .concat(state.reason_codes.map(c => `<option ${d && d.reason_code === c ? "selected" : ""}>${c}</option>`));
+  const chips = r.flags.map(f => { const [t, c] = FLAG_TEXT[f] || [f, ""]; return `<span class="chip ${c}">${t}</span>`; });
+  if (r.perishable) chips.push(`<span class="chip">Perishable</span>`);
+  const action = r.action === "ORDER" ? `Order ${r.suggested_qty}` : r.action === "PAUSE" ? "Pause next order"
+               : r.action === "HOLD" ? "Hold: no system quantity" : "No order";
+  const nums = r.route === "BLOCKED" ? "" : `<div class="nums">
+      <div><span>On hand</span>${r.on_hand}</div>
+      <div><span>12-wk avg / wk</span>${r.avg_12w}</div>
+      <div><span>4-wk avg / wk</span>${r.avg_4w} (${r.trend_pct > 0 ? "+" : ""}${r.trend_pct}%)</div>
+      <div><span>Cover now</span>${r.cover_weeks} wks</div>
+      <div><span>Allowed</span>${r.min_weeks}–${r.max_weeks} wks</div>
+      <div><span>Cover after order</span>${fmt(r.cover_after_order)}${r.cover_after_order != null ? " wks" : ""}</div>
+      <div><span>Lead time</span>${r.lead_time_weeks} wk${r.lead_time_assumed ? " (assumed)" : ""}</div>
+      <div><span>Safety stock (ref)</span>${r.safety_stock}</div>
+    </div>
+    <div class="aw">Rules as written: ${esc(r.aw_flags)} → ${r.aw_action === "ORDER" ? "order " + r.aw_qty : r.aw_action.toLowerCase()}, cover after ${fmt(r.aw_cover_after)} wks</div>`;
+  return `<div class="card ${d ? "done" : ""}" id="c-${r.sku}">
+    <div class="main">
+      <div class="title"><b>${r.sku}</b><span>${esc(r.name)}</span><span class="sub">${r.segment} · ${r.vendor}</span></div>
+      <div class="chips">${chips.join("")}</div>
+      <div><b>Suggested:</b> ${action}${r.alt_qty != null ? ` <span class="sub">· if the trend is real: ${r.alt_qty}</span>` : ""}</div>
+      <ul class="reasons">${r.reasons.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+      ${nums}
+    </div>
+    <div class="side">
+      <label>Order quantity</label>
+      <div class="qty"><input type="number" min="0" step="10" value="${qty}" data-q>
+        ${r.alt_qty != null ? `<button class="linkish" data-alt title="Use the trend-based quantity">use ${r.alt_qty}</button>` : ""}
+        <small>${r.suggested_qty != null ? "system " + r.suggested_qty : ""}</small></div>
+      <select data-r>${opts.join("")}</select>
+      <textarea data-n placeholder="Note: what do you know that the rules don't?">${esc(d ? d.note : "")}</textarea>
+      <div class="btns">
+        <button class="primary" data-a="APPROVE">Save</button>
+        <button data-a="REJECT" title="No order this run">No order</button>
+      </div>
+      <div class="status" data-s>${d ? `${d.decision} · ${esc(d.reviewer)} · ${d.decided_at.slice(11, 16)}` : ""}</div>
+    </div></div>`;
+}
+
+function wire(r) {
+  const el = document.getElementById("c-" + r.sku);
+  const q = el.querySelector("[data-q]"), s = el.querySelector("[data-s]");
+  const alt = el.querySelector("[data-alt]");
+  if (alt) alt.onclick = () => { q.value = r.alt_qty; };
+  el.querySelectorAll("[data-a]").forEach(b => b.onclick = async () => {
+    const body = {
+      sku: r.sku, decision: b.dataset.a, final_qty: q.value === "" ? 0 : +q.value,
+      reason_code: el.querySelector("[data-r]").value, note: el.querySelector("[data-n]").value,
+      reviewer: $("#reviewer").value,
+    };
+    if (body.decision === "APPROVE" && body.final_qty !== (r.suggested_qty ?? 0)) body.decision = "OVERRIDE";
+    const res = await fetch("/api/decision", { method: "POST", body: JSON.stringify(body) });
+    const out = await res.json();
+    if (!res.ok) { s.className = "status err"; s.textContent = out.error; return; }
+    state.decisions[r.sku] = out;
+    render();
+  });
+}
+
+$("#zohobtn").onclick = async () => {
+  const out = await (await fetch("/api/zoho", { method: "POST" })).json();
+  $("#zohomsg").textContent = `${out.lines.length} lines on ${out.pos} draft PO(s) → ${out.path}` +
+    (out.pending.length ? ` · not included, still undecided: ${out.pending.join(", ")}` : "");
+  $("#zohotable").innerHTML = out.lines.length ? `<table><tr><th>PO</th><th>Vendor</th><th>SKU</th><th>Item</th>
+    <th>Qty</th><th>Expected</th><th>Notes</th></tr>` + out.lines.map(l => `<tr><td>${esc(l["Purchase Order Number"])}</td>
+    <td>${esc(l["Vendor Name"])}</td><td>${l.SKU}</td><td>${esc(l["Item Name"])}</td><td>${l.Quantity}</td>
+    <td>${l["Expected Delivery Date"]}</td><td>${esc(l.Notes)}</td></tr>`).join("") + "</table>" : "";
+};
+
+load();
+</script>
+</body>
+</html>

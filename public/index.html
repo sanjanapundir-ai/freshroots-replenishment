@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Freshroots Replenishment</title>
+<style>
+  :root {
+    --orange: #e8590c; --orange-deep: #b3430a; --orange-soft: #fde3cf; --orange-line: #f3cdb0;
+    --white: #ffffff; --tint: #fff8f2; --ink: #2b1d14; --muted: #7a6455; --red: #c92a2a; --red-bg: #fdecec; --ok: #2f7d4f;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--white); color: var(--ink);
+         font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .band { background: var(--orange); color: var(--white); }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
+  .band .wrap { padding-block: 20px 0; display: grid; gap: 6px; }
+  h1 { font-size: 22px; margin: 0; font-weight: 600; }
+  .band .sub { opacity: .92; font-size: 13px; }
+  .tabs { display: flex; gap: 4px; margin-top: 10px; flex-wrap: wrap; }
+  .tab { all: unset; cursor: pointer; padding: 8px 14px; border-radius: 8px 8px 0 0; font-weight: 600; font-size: 13px; background: rgba(255,255,255,.16); color: var(--white); }
+  .tab[aria-selected="true"] { background: var(--white); color: var(--orange-deep); }
+  .tab:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+  main.wrap { padding-block: 20px 64px; display: grid; gap: 16px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; justify-content: space-between; }
+  label { font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
+  input, select, textarea { font: inherit; color: var(--ink); background: var(--white); border: 1px solid var(--orange-line); border-radius: 6px; padding: 6px 8px; width: 100%; }
+  textarea { resize: vertical; min-height: 34px; }
+  button { font: inherit; font-weight: 600; border-radius: 6px; padding: 7px 12px; cursor: pointer; border: 1px solid var(--orange-line); background: var(--white); color: var(--ink); }
+  button.primary { background: var(--orange); color: var(--white); border-color: var(--orange); }
+  button:disabled { opacity: .5; cursor: default; }
+  .linkish { background: none; border: none; padding: 0; color: var(--orange-deep); }
+  .banner { padding: 10px 12px; border-radius: 8px; background: var(--tint); border: 1px solid var(--orange-line); color: var(--orange-deep); font-size: 13px; }
+  .banner.bad { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+  .stat { border: 1px solid var(--orange-line); border-top: 3px solid var(--orange); border-radius: 8px; padding: 10px 12px; }
+  .stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .stat span { color: var(--muted); font-size: 12px; }
+  h2 { font-size: 15px; margin: 8px 0 0; }
+  .card { border: 1px solid var(--orange-line); border-radius: 10px; display: grid; grid-template-columns: 1fr 300px; overflow: hidden; }
+  .card.done { border-color: var(--orange); box-shadow: inset 4px 0 0 var(--orange); }
+  .main { padding: 14px 16px; min-width: 0; }
+  .side { padding: 14px 16px; border-left: 1px solid var(--orange-line); background: var(--tint); display: flex; flex-direction: column; gap: 8px; }
+  .title { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; }
+  .title b { font-size: 15px; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0; }
+  .chip { font-size: 11px; padding: 2px 7px; border-radius: 99px; background: var(--tint); border: 1px solid var(--orange-line); color: var(--muted); font-weight: 600; }
+  .chip.bad { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+  .chip.warn { background: var(--orange-soft); border-color: var(--orange-line); color: var(--orange-deep); }
+  ul.reasons { margin: 6px 0 10px; padding-left: 18px; }
+  .nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 6px 12px; font-variant-numeric: tabular-nums; }
+  .nums div span { display: block; color: var(--muted); font-size: 11px; }
+  .aw { margin-top: 10px; font-size: 12px; color: var(--muted); }
+  .qty { display: flex; gap: 6px; align-items: center; }
+  .qty input { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .qty small { color: var(--muted); white-space: nowrap; }
+  .btns { display: flex; gap: 6px; }
+  .status { font-size: 12px; color: var(--orange-deep); min-height: 16px; }
+  .status.err { color: var(--red); }
+  .tablewrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--orange-soft); font-size: 13px; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; border-bottom: 2px solid var(--orange-line); }
+  tr.pick { cursor: pointer; } tr.pick:hover td { background: var(--tint); }
+  .upload { border: 1px dashed var(--orange); border-radius: 10px; padding: 16px; display: grid; gap: 12px; background: var(--tint); }
+  .files { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  pre.log { white-space: pre-wrap; margin: 0; font-size: 12px; background: var(--white); border: 1px solid var(--orange-line); border-radius: 8px; padding: 10px; }
+  [hidden] { display: none !important; }
+  @media (max-width: 760px) { .card { grid-template-columns: 1fr; } .side { border-left: none; border-top: 1px solid var(--orange-line); } }
+</style>
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <h1>Freshroots replenishment</h1>
+    <div class="sub" id="runinfo">Loading…</div>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" data-view="review" aria-selected="true">Review queue</button>
+      <button class="tab" role="tab" data-view="runs" aria-selected="false">Runs</button>
+      <button class="tab" role="tab" data-view="upload" aria-selected="false">New run</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="view-review">
+  <div class="row">
+    <div class="muted" id="scope">Decisions are saved for everyone using this site.</div>
+    <label style="width:200px">Reviewer<input id="reviewer" placeholder="Your name"></label>
+  </div>
+  <div id="banners"></div>
+  <div class="stats" id="stats"></div>
+  <h2 id="queuehead">Needs a decision</h2>
+  <div id="queue"></div>
+  <h2>Draft purchase orders</h2>
+  <div class="row" style="justify-content:start">
+    <button class="primary" id="zohobtn">Create Zoho drafts</button>
+    <span class="muted" id="zohomsg">Downloads a CSV of every approved or overridden quantity above zero, status Draft, for the Zoho Inventory import. Nothing is sent to Zoho.</span>
+  </div>
+  <div class="tablewrap" id="zohotable"></div>
+  <h2>Passed through untouched</h2>
+  <div class="tablewrap" id="passed"></div>
+</main>
+
+<main class="wrap" id="view-runs" hidden>
+  <p class="muted" style="margin:0">Every engine run, newest first. Click one to review it.</p>
+  <div class="tablewrap" id="runs"></div>
+  <p class="muted" style="margin:0">The full decision log for the monthly review: <a href="/api/decisions.csv" style="color:var(--orange-deep)">decisions.csv</a></p>
+</main>
+
+<main class="wrap" id="view-upload" hidden>
+  <div class="upload">
+    <b>Run the engine on a new SAP export</b>
+    <span class="muted">Monday and Thursday. The run stops, with nothing recommended, if a data check fails.</span>
+    <div class="files">
+      <label>SKU master (sku_master.csv)<input type="file" id="f-sku_master.csv" accept=".csv"></label>
+      <label>Inventory snapshot (current_inventory.csv)<input type="file" id="f-current_inventory.csv" accept=".csv"></label>
+      <label>Weekly sales (weekly_sales.csv)<input type="file" id="f-weekly_sales.csv" accept=".csv"></label>
+      <label>Run date (optional, defaults to today)<input type="date" id="f-asof"></label>
+    </div>
+    <div><button class="primary" id="runbtn">Run engine</button></div>
+    <pre class="log" id="runlog" hidden></pre>
+  </div>
+</main>
+
+<script>
+const FLAG_TEXT = {
+  STOCKOUT_RISK: ["Stockout risk", "bad"], OVERSTOCK: ["Overstock", "warn"], HIGH_DEMAND: ["High demand", "warn"],
+  BORDERLINE: ["Borderline", "warn"], ASSUMPTION_SENSITIVE: ["Uplift-sensitive", "warn"], CONFLICT: ["Conflict", "bad"],
+  EXPEDITE: ["Expedite", "bad"], VOLATILE: ["Volatile", "warn"], SHELF_LIFE_RISK: ["Shelf life", "bad"], DATA_ISSUE: ["Data issue", "bad"],
+};
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const fmt = v => v === null || v === undefined || v === "" ? "–" : v;
+let state, runId = new URLSearchParams(location.search).get("run");
+
+try { $("#reviewer").value = localStorage.getItem("reviewer") || ""; } catch (e) {}
+$("#reviewer").addEventListener("change", e => { try { localStorage.setItem("reviewer", e.target.value); } catch (_) {} });
+
+async function api(path, body) {
+  const res = await fetch(path, body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : {});
+  const out = await res.json().catch(() => ({ error: "The server returned an unreadable answer" }));
+  if (!res.ok) throw new Error(out.error || res.statusText);
+  return out;
+}
+
+function show(view) {
+  document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", String(t.dataset.view === view)));
+  ["review", "runs", "upload"].forEach(v => { $("#view-" + v).hidden = v !== view; });
+  if (view === "runs") loadRuns();
+}
+document.querySelectorAll(".tab").forEach(t => t.onclick = () => show(t.dataset.view));
+
+async function load() {
+  try {
+    state = await api("/api/run" + (runId ? "?id=" + encodeURIComponent(runId) : ""));
+    runId = state.meta.run_id;
+    render();
+  } catch (e) {
+    $("#runinfo").textContent = e.message;
+    $("#queue").innerHTML = `<div class="banner">${esc(e.message)}</div>`;
+  }
+}
+
+function render() {
+  const { meta, recs, decisions } = state;
+  $("#runinfo").textContent = `Run ${meta.run_id} · inventory as of ${meta.inventory_as_of} · ${recs.length} SKUs`;
+  const stops = meta.stops.map(s => `<div class="banner bad">${esc(s)}</div>`);
+  $("#banners").innerHTML = stops.concat(meta.warnings.map(w => `<div class="banner">${esc(w)}</div>`)).join("");
+  const queue = recs.filter(r => r.route === "REVIEW" || r.route === "BLOCKED");
+  const decided = queue.filter(r => decisions[r.sku]).length;
+  const count = k => recs.filter(r => r.route === k).length;
+  const k = meta.kpi || {};
+  $("#stats").innerHTML = [
+    [`${decided} / ${queue.length}`, "decided"], [count("PASS"), "passed untouched"], [count("AUTO"), "auto-approved"],
+    [count("BLOCKED"), "blocked by data"], [k.wape_pct != null ? `${k.wape_pct}%` : "–", "forecast error (WAPE)"],
+    [k.bias_pct != null ? `${k.bias_pct > 0 ? "+" : ""}${k.bias_pct}%` : "–", "forecast bias"],
+  ].map(([b, s]) => `<div class="stat"><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join("");
+  $("#queuehead").textContent = `Needs a decision (${queue.length})`;
+  $("#queue").innerHTML = meta.stops.length ? `<p class="muted">This run was stopped by data checks. Upload a corrected export under New run.</p>`
+    : queue.map(card).join("") || `<p class="muted">Nothing to review this run.</p>`;
+  if (!meta.stops.length) queue.forEach(wire);
+  $("#zohobtn").disabled = !!meta.stops.length;
+  const passed = recs.filter(r => r.route === "PASS" || r.route === "AUTO");
+  $("#passed").innerHTML = passed.length ? `<table><tr><th>SKU</th><th>Name</th><th>Seg</th><th>Route</th>
+    <th>On hand</th><th>12-wk avg</th><th>Trend</th><th>Cover (wks)</th><th>Min–max</th></tr>` +
+    passed.map(r => `<tr><td>${esc(r.sku)}</td><td>${esc(r.name)}</td><td>${esc(r.segment)}</td><td>${esc(r.route)}</td>
+      <td>${r.on_hand}</td><td>${r.avg_12w}</td><td>${r.trend_pct > 0 ? "+" : ""}${r.trend_pct}%</td>
+      <td>${r.cover_weeks}</td><td>${r.min_weeks}–${r.max_weeks}</td></tr>`).join("") + "</table>" : `<p class="muted">None.</p>`;
+  $("#zohotable").innerHTML = "";
+}
+
+function card(r) {
+  const d = state.decisions[r.sku];
+  const qty = d ? d.final_qty : (r.suggested_qty ?? "");
+  const opts = ['<option value="">Reason (needed if you change it)</option>']
+    .concat(state.reason_codes.map(c => `<option ${d && d.reason_code === c ? "selected" : ""}>${c}</option>`));
+  const chips = r.flags.map(f => { const [t, c] = FLAG_TEXT[f] || [f, ""]; return `<span class="chip ${c}">${t}</span>`; });
+  if (r.perishable) chips.push(`<span class="chip">Perishable</span>`);
+  const action = r.action === "ORDER" ? `Order ${r.suggested_qty}` : r.action === "PAUSE" ? "Pause next order"
+               : r.action === "HOLD" ? "Hold: no system quantity" : "No order";
+  const nums = r.route === "BLOCKED" ? "" : `<div class="nums">
+      <div><span>On hand</span>${r.on_hand}</div><div><span>12-wk avg / wk</span>${r.avg_12w}</div>
+      <div><span>4-wk avg / wk</span>${r.avg_4w} (${r.trend_pct > 0 ? "+" : ""}${r.trend_pct}%)</div>
+      <div><span>Cover now</span>${r.cover_weeks} wks</div><div><span>Allowed</span>${r.min_weeks}–${r.max_weeks} wks</div>
+      <div><span>Cover after order</span>${fmt(r.cover_after_order)}${r.cover_after_order != null ? " wks" : ""}</div>
+      <div><span>Lead time</span>${r.lead_time_weeks} wk${r.lead_time_assumed ? " (assumed)" : ""}</div>
+      <div><span>Safety stock (ref)</span>${r.safety_stock}</div></div>
+    <div class="aw">Rules as written: ${esc(r.aw_flags)} → ${r.aw_action === "ORDER" ? "order " + r.aw_qty : esc(String(r.aw_action).toLowerCase())}, cover after ${fmt(r.aw_cover_after)} wks</div>`;
+  return `<div class="card ${d ? "done" : ""}" id="c-${esc(r.sku)}">
+    <div class="main">
+      <div class="title"><b>${esc(r.sku)}</b><span>${esc(r.name)}</span><span class="muted">${esc(r.segment)} · ${esc(r.vendor)}</span></div>
+      <div class="chips">${chips.join("")}</div>
+      <div><b>Suggested:</b> ${action}${r.alt_qty != null ? ` <span class="muted">· if the trend is real: ${r.alt_qty}</span>` : ""}</div>
+      <ul class="reasons">${r.reasons.map(x => `<li>${esc(x)}</li>`).join("")}</ul>${nums}
+    </div>
+    <div class="side">
+      <label>Order quantity
+        <div class="qty"><input type="number" min="0" step="10" value="${qty}" data-q>
+          ${r.alt_qty != null ? `<button class="linkish" data-alt>use ${r.alt_qty}</button>` : ""}
+          <small>${r.suggested_qty != null ? "system " + r.suggested_qty : ""}</small></div></label>
+      <select data-r aria-label="Reason code">${opts.join("")}</select>
+      <textarea data-n aria-label="Note" placeholder="Note: what do you know that the rules don't?">${esc(d ? d.note : "")}</textarea>
+      <div class="btns"><button class="primary" data-a="APPROVE">Save</button><button data-a="REJECT">No order</button></div>
+      <div class="status" data-s>${d ? `${esc(d.decision)} · ${esc(d.reviewer)} · ${esc(d.decided_at.slice(0, 16).replace("T", " "))}` : ""}</div>
+    </div></div>`;
+}
+
+function wire(r) {
+  const el = document.getElementById("c-" + r.sku);
+  const q = el.querySelector("[data-q]"), s = el.querySelector("[data-s]"), alt = el.querySelector("[data-alt]");
+  if (alt) alt.onclick = () => { q.value = r.alt_qty; };
+  el.querySelectorAll("[data-a]").forEach(b => b.onclick = async () => {
+    const body = { run_id: runId, sku: r.sku, decision: b.dataset.a, final_qty: q.value === "" ? 0 : +q.value,
+      reason_code: el.querySelector("[data-r]").value, note: el.querySelector("[data-n]").value, reviewer: $("#reviewer").value };
+    if (body.decision === "APPROVE" && body.final_qty !== (r.suggested_qty ?? 0)) body.decision = "OVERRIDE";
+    b.disabled = true;
+    try { state.decisions[r.sku] = await api("/api/decision", body); render(); }
+    catch (e) { s.className = "status err"; s.textContent = e.message; b.disabled = false; }
+  });
+}
+
+$("#zohobtn").onclick = async () => {
+  try {
+    const out = await api("/api/zoho", { run_id: runId });
+    $("#zohomsg").textContent = `${out.lines.length} lines on ${out.pos} draft PO(s), downloaded as ${out.filename}` +
+      (out.pending.length ? `. Not included, still undecided: ${out.pending.join(", ")}` : "");
+    $("#zohotable").innerHTML = out.lines.length ? `<table><tr><th>PO</th><th>Vendor</th><th>SKU</th><th>Item</th><th>Qty</th><th>Expected</th><th>Notes</th></tr>` +
+      out.lines.map(l => `<tr><td>${esc(l["Purchase Order Number"])}</td><td>${esc(l["Vendor Name"])}</td><td>${esc(l.SKU)}</td>
+        <td>${esc(l["Item Name"])}</td><td>${l.Quantity}</td><td>${esc(l["Expected Delivery Date"])}</td><td>${esc(l.Notes)}</td></tr>`).join("") + "</table>" : "";
+    if (out.lines.length) {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([out.csv], { type: "text/csv" })); a.download = out.filename; a.click();
+    }
+  } catch (e) { $("#zohomsg").textContent = e.message; }
+};
+
+async function loadRuns() {
+  try {
+    const runs = await api("/api/runs");
+    $("#runs").innerHTML = runs.length ? `<table><tr><th>Run</th><th>Inventory as of</th><th>Status</th><th>SKUs</th><th>Flagged</th><th>Decided</th></tr>` +
+      runs.map(r => `<tr class="pick" data-run="${esc(r.run_id)}"><td>${esc(r.run_id)}</td><td>${esc(r.inventory_as_of || "–")}</td>
+        <td>${r.stopped ? "Stopped by data checks" : "OK"}</td><td>${r.skus}</td><td>${r.flagged}</td><td>${r.decided}</td></tr>`).join("") + "</table>"
+      : `<p class="muted">No runs yet. Upload an export under New run.</p>`;
+    document.querySelectorAll("tr.pick").forEach(tr => tr.onclick = () => {
+      runId = tr.dataset.run; history.replaceState(null, "", "?run=" + encodeURIComponent(runId)); show("review"); load();
+    });
+  } catch (e) { $("#runs").innerHTML = `<div class="banner bad">${esc(e.message)}</div>`; }
+}
+
+$("#runbtn").onclick = async () => {
+  const names = ["sku_master.csv", "current_inventory.csv", "weekly_sales.csv"], files = {};
+  for (const n of names) {
+    const f = document.getElementById("f-" + n).files[0];
+    if (f) files[n] = await f.text();
+  }
+  const log = $("#runlog"); log.hidden = false;
+  const missing = names.filter(n => !files[n]);
+  if (missing.length) { log.textContent = "Choose all three files first. Missing: " + missing.join(", "); return; }
+  $("#runbtn").disabled = true; log.textContent = "Running…";
+  try {
+    const out = await api("/api/run", { files, as_of: $("#f-asof").value || null });
+    const lines = [`Run ${out.run_id}`];
+    out.stops.forEach(s => lines.push("STOP: " + s));
+    Object.entries(out.sku_issues).forEach(([k, v]) => lines.push(`SKU ${k}: ${v.join("; ")}`));
+    out.warnings.forEach(w => lines.push("WARN: " + w));
+    if (out.stops.length) lines.push("\nRun stopped. Nothing recommended. Fix the export and run again.");
+    else lines.push("\n" + Object.entries(out.counts).map(([k, v]) => `${v} ${k}`).join(", ") + ". Opening the review queue.");
+    log.textContent = lines.join("\n");
+    if (!out.stops.length) { runId = out.run_id; history.replaceState(null, "", "?run=" + encodeURIComponent(runId)); setTimeout(() => { show("review"); load(); }, 900); }
+  } catch (e) { log.textContent = e.message; }
+  $("#runbtn").disabled = false;
+};
+
+load();
+</script>
+</body>
+</html>
