@@ -81,3 +81,9 @@ This reports forecast error (WAPE) and bias for each past run. It also reports F
 - Learn a per-SKU seasonal index from the 3 years of history, replacing the flat 25%. The 12-week average already contains October weeks, so the flat uplift partly double-counts.
 - Move the reorder trigger to a statistical reorder point: lead-time demand + z·σ·√LT. Safety stock is already shown as a reference column.
 - Add a daily alert for drops in distributor-level orders.
+
+## Components map
+
+![Components map](docs/components_map.png)
+
+Also served at `/components_map.png` on the live site.
