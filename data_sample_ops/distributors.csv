@@ -1,0 +1,61 @@
+distributor_id,distributor,town,state,zone,cs_rep,sales_owner,annual_value_inr,rank,top50
+D051,"Om Traders, Solapur",Solapur,Maharashtra,South Maharashtra,Sunita,RSM South,3020000,1,True
+D046,"Patil Enterprises, Margao",Margao,Goa,Goa,Farah,RSM Goa,3000000,2,True
+D024,"Sawant Marketing, Amravati",Amravati,Maharashtra,Vidarbha,Kiran,RSM Vidarbha,2990000,3,True
+D022,"Sawant Enterprises, Mumbai",Mumbai,Maharashtra,Mumbai,Farah,RSM Mumbai,2910000,4,True
+D033,"Vitthal Sales Corporation, Ponda",Ponda,Goa,Goa,Farah,RSM Goa,2900000,5,True
+D001,"Sawant Distributors, Nashik",Nashik,Maharashtra,North Maharashtra,Rohan,RSM North,2800000,6,True
+D042,"Joshi Marketing, Jalgaon",Jalgaon,Maharashtra,North Maharashtra,Rohan,RSM North,2800000,7,True
+D007,"Kulkarni Traders, Nagpur",Nagpur,Maharashtra,Vidarbha,Kiran,RSM Vidarbha,2700000,8,True
+D018,"Joshi Traders, Mumbai",Mumbai,Maharashtra,Mumbai,Farah,RSM Mumbai,2700000,9,True
+D028,"Shree Ganesh Traders, Mumbai",Mumbai,Maharashtra,Mumbai,Farah,RSM Mumbai,2680000,10,True
+D032,"Desai Traders, Ponda",Ponda,Goa,Goa,Farah,RSM Goa,2680000,11,True
+D040,"Mahalaxmi Distributors, Aurangabad",Aurangabad,Maharashtra,Marathwada,Rohan,RSM North,2680000,12,True
+D056,"Pai Enterprises, Kolhapur",Kolhapur,Maharashtra,South Maharashtra,Sunita,RSM South,2630000,13,True
+D045,"Joshi Distributors, Nashik",Nashik,Maharashtra,North Maharashtra,Rohan,RSM North,2600000,14,True
+D038,"Siddhivinayak Distributors, Kolhapur",Kolhapur,Maharashtra,South Maharashtra,Sunita,RSM South,2520000,15,True
+D003,"Shinde Traders, Mumbai",Mumbai,Maharashtra,Mumbai,Farah,RSM Mumbai,2480000,16,True
+D011,"Kulkarni Traders, Aurangabad",Aurangabad,Maharashtra,Marathwada,Rohan,RSM North,2470000,17,True
+D021,"Parab Distributors, Kolhapur",Kolhapur,Maharashtra,South Maharashtra,Sunita,RSM South,2440000,18,True
+D041,"Joshi Sales Corporation, Mumbai",Mumbai,Maharashtra,Mumbai,Farah,RSM Mumbai,2420000,19,True
+D053,"Patil Marketing, Latur",Latur,Maharashtra,Marathwada,Rohan,RSM North,2380000,20,True
+D036,"Mahalaxmi Traders, Thane",Thane,Maharashtra,Mumbai,Farah,RSM Mumbai,2360000,21,True
+D048,"Vitthal Distributors, Mumbai",Mumbai,Maharashtra,Mumbai,Farah,RSM Mumbai,2340000,22,True
+D050,"Kulkarni Enterprises, Amravati",Amravati,Maharashtra,Vidarbha,Kiran,RSM Vidarbha,2310000,23,True
+D034,"Siddhivinayak Sales Corporation, Pune",Pune,Maharashtra,Pune,Sunita,RSM Pune,2260000,24,True
+D058,"Kamat Distributors, Margao",Margao,Goa,Goa,Farah,RSM Goa,2250000,25,True
+D010,"Siddhivinayak Agencies, Satara",Satara,Maharashtra,South Maharashtra,Sunita,RSM South,2150000,26,True
+D006,"Vitthal Sales Corporation, Pune",Pune,Maharashtra,Pune,Sunita,RSM Pune,2110000,27,True
+D020,"Shree Ganesh Sales Corporation, Nashik",Nashik,Maharashtra,North Maharashtra,Rohan,RSM North,2090000,28,True
+D027,"Mahalaxmi Marketing, Nagpur",Nagpur,Maharashtra,Vidarbha,Kiran,RSM Vidarbha,2080000,29,True
+D055,"Gaonkar Agencies, Amravati",Amravati,Maharashtra,Vidarbha,Kiran,RSM Vidarbha,2050000,30,True
+D008,"Patil Distributors, Thane",Thane,Maharashtra,Mumbai,Farah,RSM Mumbai,2040000,31,True
+D029,"Siddhivinayak Traders, Panaji",Panaji,Goa,Goa,Farah,RSM Goa,2040000,32,True
+D047,"Vitthal Agencies, Mumbai",Mumbai,Maharashtra,Mumbai,Farah,RSM Mumbai,2010000,33,True
+D004,"Parab Sales Corporation, Mumbai",Mumbai,Maharashtra,Mumbai,Farah,RSM Mumbai,1990000,34,True
+D060,"Mahalaxmi Marketing, Nashik",Nashik,Maharashtra,North Maharashtra,Rohan,RSM North,1990000,35,True
+D026,"Desai Distributors, Aurangabad",Aurangabad,Maharashtra,Marathwada,Rohan,RSM North,1980000,36,True
+D031,"Mahalaxmi Distributors, Pune",Pune,Maharashtra,Pune,Sunita,RSM Pune,1970000,37,True
+D016,"Desai Enterprises, Mumbai",Mumbai,Maharashtra,Mumbai,Farah,RSM Mumbai,1920000,38,True
+D009,"Desai Enterprises, Solapur",Solapur,Maharashtra,South Maharashtra,Sunita,RSM South,1910000,39,True
+D014,"Mahalaxmi Sales Corporation, Pune",Pune,Maharashtra,Pune,Sunita,RSM Pune,1870000,40,True
+D017,"Vitthal Distributors, Latur",Latur,Maharashtra,Marathwada,Rohan,RSM North,1860000,41,True
+D030,"Vitthal Agencies, Pune",Pune,Maharashtra,Pune,Sunita,RSM Pune,1860000,42,True
+D044,"Shinde Traders, Panaji",Panaji,Goa,Goa,Farah,RSM Goa,1810000,43,True
+D002,"Joshi Enterprises, Pune",Pune,Maharashtra,Pune,Sunita,RSM Pune,1800000,44,True
+D013,"Naik Enterprises, Nagpur",Nagpur,Maharashtra,Vidarbha,Kiran,RSM Vidarbha,1730000,45,True
+D059,"Pai Traders, Nashik",Nashik,Maharashtra,North Maharashtra,Rohan,RSM North,1670000,46,True
+D015,"Kulkarni Enterprises, Nashik",Nashik,Maharashtra,North Maharashtra,Rohan,RSM North,1660000,47,True
+D019,"Sai Marketing, Panaji",Panaji,Goa,Goa,Farah,RSM Goa,1630000,48,True
+D037,"Kamat Enterprises, Latur",Latur,Maharashtra,Marathwada,Rohan,RSM North,1610000,49,True
+D057,"Navratna Enterprises, Pune",Pune,Maharashtra,Pune,Sunita,RSM Pune,1610000,50,True
+D005,"Pai Distributors, Pune",Pune,Maharashtra,Pune,Sunita,RSM Pune,1570000,51,False
+D049,"Sai Sales Corporation, Solapur",Solapur,Maharashtra,South Maharashtra,Sunita,RSM South,1560000,52,False
+D012,"Shinde Agencies, Satara",Satara,Maharashtra,South Maharashtra,Sunita,RSM South,1550000,53,False
+D023,"Deshmukh Distributors, Panaji",Panaji,Goa,Goa,Farah,RSM Goa,1540000,54,False
+D054,"Sawant Enterprises, Aurangabad",Aurangabad,Maharashtra,Marathwada,Rohan,RSM North,1500000,55,False
+D052,"Vitthal Distributors, Nagpur",Nagpur,Maharashtra,Vidarbha,Kiran,RSM Vidarbha,1490000,56,False
+D039,"Kulkarni Enterprises, Kolhapur",Kolhapur,Maharashtra,South Maharashtra,Sunita,RSM South,1480000,57,False
+D025,"Joshi Sales Corporation, Aurangabad",Aurangabad,Maharashtra,Marathwada,Rohan,RSM North,1430000,58,False
+D035,"Om Distributors, Pune",Pune,Maharashtra,Pune,Sunita,RSM Pune,1330000,59,False
+D043,"Kamat Distributors, Nashik",Nashik,Maharashtra,North Maharashtra,Rohan,RSM North,1110000,60,False
