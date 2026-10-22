@@ -20,6 +20,15 @@ The same engine runs as a website: `public/index.html` is the screen, and `api/i
 
 Deploy: create a Neon database, run `schema.sql`, set `DATABASE_URL` in the Vercel project, and push to `main`. The site has no login: anyone with the link can save decisions.
 
+## Distributor queries and metric alerts
+
+Two more tabs in the hosted app (`ops.py`, tables in `schema.sql`, register seeded by `seed_metrics.sql`):
+
+- **Distributor queries:** CS reps log every WhatsApp query (7 categories). The tool sets a 2-working-hour first-reply deadline (Mon–Sat 9:00–19:00 IST) and keeps a history of reply, reassign and resolve. It tracks the 6-week automate-or-not gate: automate only if routine queries are 60% or more. Export: `/api/queries.csv`.
+- **Metric alerts:** a 12-metric owner register (owner, trigger, action, deadline, escalation contact). Owners acknowledge alerts with the action taken; an alert still open after its deadline escalates to Deepa. Escalation is applied whenever alerts are read, so no scheduler is needed. A raw material PO above 5 lakh goes through a gate alert that shows the last 48 hours of alerts before sign-off. Each engine run raises a stockout alert for A-class SKUs at risk.
+
+The operating plan behind both is a separate document shared with Deepa.
+
 ## Local tools: twice a week (Mon/Thu)
 
 ```bash
