@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1940 1270" width="1940" height="1270">
+<defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#14233c"/></marker>
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; fill: #14233c; }
+    .tt { font-size: 34px; font-weight: 700; }
+    .st { font-size: 17px; fill: #4a5a78; }
+    .hd { font-size: 21px; font-weight: 600; fill: #ffffff; }
+    .an { font-size: 21px; font-weight: 700; fill: #ffffff; }
+    .as { font-size: 15px; fill: #c9d4e8; }
+    .bt { font-size: 17px; font-weight: 650; }
+    .bb { font-size: 14.5px; fill: #33425e; }
+    .al { font-size: 13px; font-style: italic; fill: #4a5a78; }
+    .pn { font-size: 19px; font-weight: 700; fill: #b3430a; }
+    .pc { font-size: 15.5px; font-weight: 600; fill: #c92a2a; }
+    .pb { font-size: 15px; fill: #33425e; }
+    .pf { font-size: 15px; font-weight: 600; fill: #14233c; }
+  </style>
+</defs>
+<rect width="1940" height="1270" fill="#ffffff"/>
+<g transform="translate(470 14) scale(0.95)">
+  <circle cx="32" cy="32" r="31" fill="#fff4ec" stroke="#f3cdb0" stroke-width="2"/>
+  <path d="M32 23 C31 18 31.5 13 33.5 8" fill="none" stroke="#2f9e44" stroke-width="3" stroke-linecap="round"/>
+  <path d="M31.5 21 C26 20 21 16 19 10 C25 10 30 14 31.5 21 Z" fill="#40c057"/>
+  <path d="M33 19 C35 13 40 9 46 8.5 C45 14.5 40 18.5 33 19 Z" fill="#2f9e44"/>
+  <path d="M20.5 25 C25 21.5 39 21.5 43.5 25 C43 35 37.5 47 33 56 C32.4 57.2 31.6 57.2 31 56 C26.5 47 21 35 20.5 25 Z" fill="#e8590c"/>
+  <path d="M24.5 31 L30 31 M34.5 37 L40 37 M27 43 L31.5 43" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+</g>
+<text x="548" y="58" class="tt">Case 1 · Freshroots Operations — Components Map</text>
+<text x="548" y="86" class="st">Mandate: live in 90 days, within ₹15 lakh, with 3 IT staff and 1 analyst. No AI team: SAP exports and written rules.</text>
+<rect x="20.0" y="104" width="617.3333333333334" height="150" rx="10" fill="#fff8f2" stroke="#f3cdb0" stroke-width="1.5"/>
+<rect x="20.0" y="104" width="6" height="150" rx="3" fill="#e8590c"/>
+<text x="42.0" y="136" class="pn">1  Demand planning</text>
+<text x="42.0" y="164" class="pc">₹28–34L a quarter in stockouts and write-offs</text>
+<text x="42.0" y="196" class="pb">Bottleneck: monthly SAP-to-Excel cycle, data 3–4 weeks old</text>
+<text x="42.0" y="226" class="pf">Fix: twice-weekly rules engine, review only exceptions</text>
+<rect x="661.3333333333334" y="104" width="617.3333333333334" height="150" rx="10" fill="#fff8f2" stroke="#f3cdb0" stroke-width="1.5"/>
+<rect x="661.3333333333334" y="104" width="6" height="150" rx="3" fill="#e8590c"/>
+<text x="683.3333333333334" y="136" class="pn">2  Distributor service</text>
+<text x="683.3333333333334" y="164" class="pc">₹18–25L a year for every distributor lost</text>
+<text x="683.3333333333334" y="196" class="pb">Bottleneck: WhatsApp only, no data, after-hours queries wait</text>
+<text x="683.3333333333334" y="226" class="pf">Fix: query log, 2-hour reply clock, handoff, auto-reply</text>
+<rect x="1302.6666666666667" y="104" width="617.3333333333334" height="150" rx="10" fill="#fff8f2" stroke="#f3cdb0" stroke-width="1.5"/>
+<rect x="1302.6666666666667" y="104" width="6" height="150" rx="3" fill="#e8590c"/>
+<text x="1324.6666666666667" y="136" class="pn">3  Operations intelligence</text>
+<text x="1324.6666666666667" y="164" class="pc">₹9L write-off from one late signal</text>
+<text x="1324.6666666666667" y="196" class="pb">Bottleneck: weekly report, nobody owns a mid-week move</text>
+<text x="1324.6666666666667" y="226" class="pf">Fix: one owner per metric, alerts with deadlines, escalation</text>
+<rect x="240" y="340" width="1680" height="150" fill="#fff1e6"/>
+<rect x="240" y="490" width="1680" height="150" fill="#eaf2ff"/>
+<rect x="240" y="640" width="1680" height="150" fill="#f1edff"/>
+<rect x="240" y="790" width="1680" height="150" fill="#fff8e1"/>
+<rect x="240" y="940" width="1680" height="150" fill="#eaf7ee"/>
+<rect x="240" y="1090" width="1680" height="150" fill="#fdeef3"/>
+<line x1="520" y1="340" x2="520" y2="1240" stroke="#ffffff" stroke-width="2"/>
+<line x1="800" y1="340" x2="800" y2="1240" stroke="#ffffff" stroke-width="2"/>
+<line x1="1080" y1="340" x2="1080" y2="1240" stroke="#ffffff" stroke-width="2"/>
+<line x1="1360" y1="340" x2="1360" y2="1240" stroke="#ffffff" stroke-width="2"/>
+<line x1="1640" y1="340" x2="1640" y2="1240" stroke="#ffffff" stroke-width="2"/>
+<line x1="240" y1="490" x2="1920" y2="490" stroke="#ffffff" stroke-width="2"/>
+<line x1="240" y1="640" x2="1920" y2="640" stroke="#ffffff" stroke-width="2"/>
+<line x1="240" y1="790" x2="1920" y2="790" stroke="#ffffff" stroke-width="2"/>
+<line x1="240" y1="940" x2="1920" y2="940" stroke="#ffffff" stroke-width="2"/>
+<line x1="240" y1="1090" x2="1920" y2="1090" stroke="#ffffff" stroke-width="2"/>
+<rect x="20" y="280" width="1900" height="60" rx="8" fill="#14233c"/>
+<text x="130.0" y="318" text-anchor="middle" class="hd">Actor</text>
+<text x="380.0" y="318" text-anchor="middle" class="hd">Trigger</text>
+<text x="660.0" y="318" text-anchor="middle" class="hd">Input</text>
+<text x="940.0" y="318" text-anchor="middle" class="hd">Context</text>
+<text x="1220.0" y="318" text-anchor="middle" class="hd">Processing</text>
+<text x="1500.0" y="318" text-anchor="middle" class="hd">AI / Rules</text>
+<text x="1780.0" y="318" text-anchor="middle" class="hd">Output</text>
+<rect x="20" y="340" width="220" height="900" fill="#14233c"/>
+<text x="130.0" y="411.0" text-anchor="middle" class="an">Deepa</text>
+<text x="130.0" y="435.0" text-anchor="middle" class="as">(Head of Operations)</text>
+<text x="130.0" y="561.0" text-anchor="middle" class="an">Team</text>
+<text x="130.0" y="585.0" text-anchor="middle" class="as">(Raghav · CS reps · owners)</text>
+<line x1="20" y1="490" x2="240" y2="490" stroke="#2a3d5e" stroke-width="2"/>
+<text x="130.0" y="711.0" text-anchor="middle" class="an">SAP + WhatsApp</text>
+<text x="130.0" y="735.0" text-anchor="middle" class="as">(sources)</text>
+<line x1="20" y1="640" x2="240" y2="640" stroke="#2a3d5e" stroke-width="2"/>
+<text x="130.0" y="861.0" text-anchor="middle" class="an">System</text>
+<text x="130.0" y="885.0" text-anchor="middle" class="as">(engine + alerts, Vercel)</text>
+<line x1="20" y1="790" x2="240" y2="790" stroke="#2a3d5e" stroke-width="2"/>
+<text x="130.0" y="1011.0" text-anchor="middle" class="an">Database</text>
+<text x="130.0" y="1035.0" text-anchor="middle" class="as">(Neon Postgres)</text>
+<line x1="20" y1="940" x2="240" y2="940" stroke="#2a3d5e" stroke-width="2"/>
+<text x="130.0" y="1161.0" text-anchor="middle" class="an">Zoho Inventory</text>
+<text x="130.0" y="1185.0" text-anchor="middle" class="as">(Procurement)</text>
+<line x1="20" y1="1090" x2="240" y2="1090" stroke="#2a3d5e" stroke-width="2"/>
+<rect x="258" y="659.0" width="244" height="112" rx="10" fill="#e9e5ff" stroke="#5b4bdb" stroke-width="2"/>
+<text x="380.0" y="709.0" text-anchor="middle" class="bt">Mon &amp; Thu SAP export; a</text>
+<text x="380.0" y="729.0" text-anchor="middle" class="bt">WhatsApp query arrives</text>
+<rect x="538" y="509.0" width="244" height="112" rx="10" fill="#e3efff" stroke="#2f6fd6" stroke-width="2"/>
+<text x="660.0" y="542.0" text-anchor="middle" class="bt">Uploads 3 CSVs; CS rep</text>
+<text x="660.0" y="562.0" text-anchor="middle" class="bt">logs each query</text>
+<text x="660.0" y="582.0" text-anchor="middle" class="bb">SKUs, stock, sales; query</text>
+<text x="660.0" y="599.0" text-anchor="middle" class="bb">category</text>
+<rect x="818" y="809.0" width="244" height="112" rx="10" fill="#e2f6e7" stroke="#2f9e44" stroke-width="2"/>
+<text x="940.0" y="842.0" text-anchor="middle" class="bt">Data checks + signed-off</text>
+<text x="940.0" y="862.0" text-anchor="middle" class="bt">rules</text>
+<text x="940.0" y="882.0" text-anchor="middle" class="bb">Min/max cover, festival months,</text>
+<text x="940.0" y="899.0" text-anchor="middle" class="bb">owner per metric</text>
+<rect x="1098" y="809.0" width="244" height="112" rx="10" fill="#fff1cc" stroke="#e8a400" stroke-width="2"/>
+<text x="1220.0" y="859.0" text-anchor="middle" class="bt">Cover per SKU, reply</text>
+<text x="1220.0" y="879.0" text-anchor="middle" class="bt">clock, order-drop check</text>
+<rect x="1378" y="809.0" width="244" height="112" rx="10" fill="#ffe3ef" stroke="#d6336c" stroke-width="2"/>
+<text x="1500.0" y="850.5" text-anchor="middle" class="bt">Flags exceptions, routes</text>
+<text x="1500.0" y="870.5" text-anchor="middle" class="bt">each to one owner</text>
+<text x="1500.0" y="890.5" text-anchor="middle" class="bb">Rules, no LLM</text>
+<rect x="1378" y="959.0" width="244" height="112" rx="10" fill="#dff5f2" stroke="#0c8f80" stroke-width="2"/>
+<text x="1500.0" y="1009.0" text-anchor="middle" class="bt">Runs, decisions,</text>
+<text x="1500.0" y="1029.0" text-anchor="middle" class="bt">queries, alerts</text>
+<rect x="1658" y="509.0" width="244" height="112" rx="10" fill="#ffe8d9" stroke="#e8590c" stroke-width="2"/>
+<text x="1780.0" y="552.0" text-anchor="middle" class="bt">Owner acts by deadline</text>
+<text x="1780.0" y="572.0" text-anchor="middle" class="bb">Approve order, reply,</text>
+<text x="1780.0" y="589.0" text-anchor="middle" class="bb">acknowledge alert</text>
+<rect x="1658" y="359.0" width="244" height="112" rx="10" fill="#fde2e2" stroke="#c92a2a" stroke-width="2"/>
+<text x="1780.0" y="392.0" text-anchor="middle" class="bt">Dashboard: needs action</text>
+<text x="1780.0" y="412.0" text-anchor="middle" class="bt">today</text>
+<text x="1780.0" y="432.0" text-anchor="middle" class="bb">Escalations, problem → fix,</text>
+<text x="1780.0" y="449.0" text-anchor="middle" class="bb">Hindi / English</text>
+<rect x="1658" y="1109.0" width="244" height="112" rx="10" fill="#e3efff" stroke="#2f6fd6" stroke-width="2"/>
+<text x="1780.0" y="1160.5" text-anchor="middle" class="bt">Draft purchase orders</text>
+<text x="1780.0" y="1180.5" text-anchor="middle" class="bb">Approved quantities only</text>
+<path d="M502 715.0 H660.0 V625.0" fill="none" stroke="#14233c" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#ah)"/>
+<path d="M782 565.0 H796 V865.0 H814" fill="none" stroke="#14233c" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#ah)"/>
+<path d="M1062 865.0 H1094" fill="none" stroke="#14233c" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#ah)"/>
+<path d="M1342 865.0 H1374" fill="none" stroke="#14233c" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#ah)"/>
+<path d="M1500.0 921.0 V955.0" fill="none" stroke="#14233c" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#ah)"/>
+<path d="M1500.0 809.0 V565.0 H1654" fill="none" stroke="#14233c" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#ah)"/><text x="1508.0" y="557.0" text-anchor="start" class="al">exceptions only</text>
+<path d="M1622 1015.0 H1648 V415.0 H1654" fill="none" stroke="#14233c" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#ah)"/><text x="1656" y="1037.0" text-anchor="start" class="al">live data</text>
+<path d="M1780.0 509.0 V475.0" fill="none" stroke="#14233c" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#ah)"/><text x="1770.0" y="494.0" text-anchor="end" class="al">late → escalates</text>
+<path d="M1850.0 621.0 V1105.0" fill="none" stroke="#14233c" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#ah)"/><text x="1842.0" y="661.0" text-anchor="end" class="al">approved quantities</text>
+</svg>
